@@ -1,25 +1,36 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Mailbox from './views/Mailbox';
+import MessageComposer from './components/MessageComposer';
+// import MessageReader from './views/MessageReader';
 
-Vue.use(Router)
+Vue.use(Router);
 
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
-  ]
-})
+const compose = {
+  path: 'compose',
+  name: 'compose',
+  component: MessageComposer,
+};
+
+const inbox = {
+  path: '/inbox',
+  name: 'inbox',
+  component: Mailbox,
+  children: [compose],
+};
+
+const outbox = {
+  path: '/outbox',
+  name: 'outbox',
+  component: Mailbox,
+  children: [compose]
+};
+
+const base = {
+  path: '/',
+  redirect: '/inbox',
+};
+
+const routes = [ base, inbox, outbox ];
+
+export default new Router({mode: 'history', base: process.env.BASE_URL, routes,})
