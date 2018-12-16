@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Mailbox from './views/Mailbox';
-import MessageComposer from './components/MessageComposer';
-import MessageReader from './components/MessageReader';
+import MessageComposer from './views/MessageComposer';
+import MessageReader from './views/MessageReader';
 
 Vue.use(Router);
 
