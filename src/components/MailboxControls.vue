@@ -33,12 +33,18 @@
     <div>
         <router-link to="/inbox" class="mailbox-button" active-class="is-active">Inbox</router-link>
         <router-link to="/outbox" class="mailbox-button" active-class="is-active">Outbox</router-link>
-        <router-link to="compose" append class="mailbox-button">Compose</router-link>
+        <router-link :to="composeMessageLink()" class="mailbox-button">Compose</router-link>
     </div>
 </template>
 
 <script>
   export default {
     name: 'MailboxControls',
+    methods: {
+      composeMessageLink() {
+        const mailbox = this.$route.path.indexOf('inbox') > -1 ? 'inbox' : 'outbox';
+        return `/${mailbox}/compose`;
+      }
+    }
   }
 </script>

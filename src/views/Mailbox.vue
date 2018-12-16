@@ -16,18 +16,31 @@
 <template>
     <section class="mailbox">
         <MailboxControls></MailboxControls>
-        <!-- mailbox-list -->
-
+        <MessageList :messages="messages"></MessageList>
         <hr class="mailbox-border"/>
-
         <router-view></router-view>
-
     </section>
 </template>
 
 <script>
+    import { MailService } from '../MailService';
     import MailboxControls from '../components/MailboxControls';
+    import MessageList from '../components/MessageList';
+
     export default {
-      components: {MailboxControls}
+      components: { MailboxControls, MessageList },
+      data (){
+        return {
+          messages: []
+        };
+      },
+
+      beforeRouteEnter (to, from, next) {
+        const route = to.path.split('/').filter(element => !!element);
+        const mailbox = route[0];
+
+        MailService.getMessages(mailbox)
+          .then(messages => next(vm => vm.messages = messages));
+      }
     }
 </script>
