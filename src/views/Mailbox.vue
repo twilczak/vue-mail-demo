@@ -28,13 +28,13 @@
     import MessageList from '../components/MessageList';
 
     export default {
+      name: 'Mailbox',
       components: { MailboxControls, MessageList },
       data (){
         return {
           messages: []
         };
       },
-
       beforeRouteEnter (to, from, next) {
         const route = to.path.split('/').filter(element => !!element);
         const mailbox = route[0];
