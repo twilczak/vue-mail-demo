@@ -27,6 +27,11 @@
     import MailboxControls from '../components/MailboxControls';
     import MessageList from '../components/MessageList';
 
+    function getMailbox(route) {
+      const segments = route.path.split('/').filter(element => !!element);
+      return segments[0];
+    }
+
     export default {
       name: 'Mailbox',
       components: { MailboxControls, MessageList },
@@ -36,11 +41,17 @@
         };
       },
       beforeRouteEnter (to, from, next) {
-        const route = to.path.split('/').filter(element => !!element);
-        const mailbox = route[0];
-
+        const mailbox = getMailbox(to);
         MailService.getMessages(mailbox)
           .then(messages => next(vm => vm.messages = messages));
+      },
+      beforeRouteUpdate (to, from, next) {
+        const mailbox = getMailbox(to);
+        MailService.getMessages(mailbox)
+          .then(messages => {
+            this.messages = messages;
+            next();
+          });
       }
     }
 </script>

@@ -18,8 +18,7 @@ export class MailService {
   static deleteMessage(mailbox, id) {
     const url = `${this.hostUrl}/${mailbox}/${id}`;
     const options = {method: 'DELETE'};
-    return fetch(url, options)
-      .then(response => response.json());
+    return fetch(url, options);
   }
 
   static sendMessage(message) {

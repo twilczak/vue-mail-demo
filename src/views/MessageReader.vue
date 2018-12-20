@@ -16,7 +16,7 @@
     import { MailService } from '../MailService';
     import MessageDetail from '../components/MessageDetail';
 
-    function getRoutePrams(to) {
+    function getRouteParams(to) {
       const route = to.path.split('/').filter(element => !!element);
       const mailbox = route[0];
       const id = route[2];
@@ -33,13 +33,13 @@
         }
       },
       beforeRouteEnter (to, from, next) {
-        const {mailbox, id} = getRoutePrams(to);
+        const {mailbox, id} = getRouteParams(to);
 
         MailService.getMessage(mailbox, id)
           .then(message => next(vm => vm.message = message));
       },
       beforeRouteUpdate (to, from, next) {
-        const {mailbox, id} = getRoutePrams(to);
+        const {mailbox, id} = getRouteParams(to);
         this.message = {};
         MailService.getMessage(mailbox, id)
           .then(message => {
@@ -48,8 +48,11 @@
           });
       },
       methods: {
-        onDelete(/*event*/) {
-          // TODO: Implement me.
+        onDelete(message) {
+          const {mailbox} = getRouteParams(this.$route);
+          MailService
+            .deleteMessage(mailbox,  message.id)
+            .then(() => this.$router.replace(`/${mailbox}`));
         },
       }
     }
