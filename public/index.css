@@ -11,7 +11,8 @@ a {
 }
 
 .message-controls {
-    padding-top: 10px; }
+    padding-top: 10px;
+}
 
 .message-button {
     margin: 5px;
@@ -24,16 +25,20 @@ a {
     display: block;
     text-align: center;
     font-family: inherit;
-    font-size: inherit; }
+    font-size: inherit;
+}
 
 .message-button--link {
-    width: 130px; }
+    width: 130px;
+}
 
 .message-button:hover {
-    background: rgba(225, 225, 225, 0.5); }
+    background: rgba(225, 225, 225, 0.5);
+}
 
 .message-button[disabled],
 .message-button[disabled]:hover {
     border: 1px solid #afafaf;
     color: #afafaf;
-    background: white; }
+    background: white;
+}

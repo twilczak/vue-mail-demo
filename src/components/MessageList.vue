@@ -102,6 +102,14 @@
       props: {
         messages: Array
       },
+      updated () {
+        this.$nextTick(() => {
+          const route = this.$route.path.split('/').filter(element => !!element);
+          if(route.length > 2) {
+            this.scrollMessageIntoView(route[2]);
+          }
+        });
+      },
       methods: {
         isInbox() {
           return this.$route.path.indexOf('inbox') > -1;
@@ -109,6 +117,12 @@
         viewMessageLink(message) {
           const mailbox = this.isInbox() ? 'inbox' : 'outbox';
           return `/${mailbox}/view/${message.id}`;
+        },
+        scrollMessageIntoView(id) {
+          const element = document.getElementById(id);
+          if( element ) {
+            element.scrollIntoView();
+          }
         }
       }
     }
